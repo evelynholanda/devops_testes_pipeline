@@ -1,11 +1,30 @@
-image: docker.io/cypress/browsers
+# Nome pipeline
+name: Run Basic Testes
 
-  stages:
-    - Build
+# Quando será executada (push, pull requests)
+on: 
+  pull_request: 
+    branches: [main]
 
-  build-job
-    stage: build
-    script:
-      - npm install
-      - npm cypress run
-  
+# Jobs para bildar, rodar testes, criar ambiente
+jobs:
+  cypress_run:
+# Maquina que será executada (ubuntu, mac)
+    runs-on: ubuntu-latest
+# Passo a passo para rodar os testes
+    steps: 
+    # Clone do projeto
+     -  name: Checkout/Clone do projeto
+        uses: actions/checkout@v3
+
+    # Exemplo de Execução no terminal , se não houver action pronta
+     -  name: Instalar dependencia no projeto
+        run: npm install
+
+    # Execução e configuração do projeto
+     -  name: Run testes
+        uses: cypress-io/github-action@v5
+        with: 
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets. CYPRESS_RECORD_KEY }}
