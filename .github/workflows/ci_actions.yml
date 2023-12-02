@@ -1,11 +1,31 @@
-name: End-to-end tests 🧪
-on: [push]
+# Nome pipeline
+name: Run Basic Testes
+
+# Quando será executada (push, pull requests)
+on: 
+  pull requests: 
+    branches: [main]
+
+# Jobs para bildar, rodar testes, criar ambiente
 jobs:
-  cypress-run:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-     
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
+  cypress run:
+# Maquina que será executada (ubuntu, mac)
+    runs-on: ubuntu-latest
+# Passo a passo para rodar os testes
+    steps: 
+    # Clone do projeto
+     -  name: Checkout/Clone do projeto
+        uses: actions/checkout@v3
+
+    # Exemplo de Execução no terminal , se não houver action pronta
+     -  name: Instalar dependencia no projeto
+        run: npm install
+
+    # Execução e configuração do projeto
+     -  name: Run testes
+        uses: cypress-io/github-action@v5
+        with: 
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets. CYPRESS_RECORD_KEY }}
+      
