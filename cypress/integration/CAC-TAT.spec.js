@@ -127,7 +127,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     
     });
     it('Select radio button with text Elogio', () => {
-        cy.get('input[type="radio"][value="elogios"]')
+        cy.get('input[type="radio"][value="elogio"]')
             .check()
             .should('have.value', 'elogio')
         
